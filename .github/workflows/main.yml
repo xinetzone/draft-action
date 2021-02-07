@@ -1,0 +1,28 @@
+name: test
+on: push
+jobs:
+  build:
+    name: Super Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Super Linter
+        uses: github/super-linter@v3
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  set-node:
+    name: set up node
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      
+      - name: run node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: npm install -g bats
+      - run: bats -v
