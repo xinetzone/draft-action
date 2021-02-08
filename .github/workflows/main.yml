@@ -14,7 +14,7 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   set-node:
-    name: set up node
+    name: set up hexo
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -23,6 +23,9 @@ jobs:
       - name: run node
         uses: actions/setup-node@v2
         with:
-          node-version: 'latest'
-      - run: npm install -g bats
-      - run: bats -v
+          node-version: 15
+      - name: set up hexo-cli
+        run: |
+          npm install hexo-cli -g
+          npm install hexo
+          echo 'PATH="$PATH:./node_modules/.bin"' >> ~/.profile
